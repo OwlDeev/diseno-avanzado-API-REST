@@ -1,4 +1,4 @@
-const {obtenerJoyas, obtenerJoyasPorFiltros } = require("./consultas");
+const {obtenerJoyas, obtenerJoyasFiltro,obtenerJoyasPorFiltros } = require("./consultas");
 const ErrorResponse = require("../helper/errorResponse");
 const { response } = require("express");
 
@@ -17,15 +17,14 @@ exports.getJoyas = async (req, res, next) => {
     const queryStrings = req.query;
     if(queryStrings.order_by != undefined || queryStrings.page != undefined || queryStrings.limits != undefined ){
        try {
-      //   // const queryStrings = req.query;
           if(![queryStrings].includes('')){
-            // console.log('pasa por aca')
-      //        const joyas = await obtenerJoyasFiltro(queryStrings);
-      //        res.json(joyas);
-      //    }else {
-      //        next(
-      //          console.log('error')
-      //          );
+             console.log(queryStrings)
+              const joyas = await obtenerJoyasFiltro(queryStrings);
+              res.json(joyas);
+          }else {
+              next(
+                console.log('error')
+                );
           }
     
         } catch (err) {
@@ -54,31 +53,6 @@ exports.getJoyas = async (req, res, next) => {
   }
 };
 
-//  exports.getJoyasFiltro = async (req, res, next) => {
-//    try {
-//     //  const queryStrings = req.query;
-//      if(![queryStrings].includes('')){
-//          const joyas = await obtenerJoyasFiltro(queryStrings);
-//          res.json(joyas);
-//      }else {
-//          next(
-//            console.log('error')
-//            );
-//      }
-
-//    } catch (err) {
-//      next(
-//        new ErrorResponse(
-//          "Error, no ha sido posible obtener por filtros, error: " +
-//            err.message +
-//            400,
-          
-//        )
-      
-//      );
-    
-//    }
-//  };
 
 exports.getJoyasPorFiltros = async (req, res, next) => {
   try {
