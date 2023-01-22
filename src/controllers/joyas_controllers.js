@@ -18,9 +18,12 @@ exports.getJoyas = async (req, res, next) => {
     if(queryStrings.order_by != undefined || queryStrings.page != undefined || queryStrings.limits != undefined ){
        try {
           if(![queryStrings].includes('')){
-             console.log(queryStrings)
               const joyas = await obtenerJoyasFiltro(queryStrings);
-              res.json(joyas);
+              return res.json({
+                totalJoyas: joyas.length,
+                totalStock: obtenerStock(joyas),
+                results: joyas,
+              });
           }else {
               next(
                 console.log('error')
